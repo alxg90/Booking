@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Booking/.vs/Booking/v15/Server/sqlite3
+/Booking/Booking/bin/Debug
+/Booking/Booking/obj/Debug
+/Booking/Booking.DataAccess/obj/Debug
+/Booking/Booking.DataAccess/bin/Debug
+/Booking/Booking.Models/obj/Debug
+/Booking/Booking.Models/bin/Debug
