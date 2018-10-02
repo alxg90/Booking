@@ -2,6 +2,7 @@
 
 namespace Booking
 {
+    //TODO: 3. Вивести на екран відправлення/прибуття, тривалість, кількість вільних місць по типу вагонів.
     class Program
     {
         static void Main(string[] args)
@@ -9,7 +10,7 @@ namespace Booking
             // Можна винести в конструктор?
             ITrainRepository trainRepository = new TrainRepository();
 
-            var trains = trainRepository.GetTrains();
+            var train = trainRepository.GetTrain(143);
         }
     }
 }

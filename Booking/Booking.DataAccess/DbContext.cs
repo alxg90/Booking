@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Booking.DataAccess
 {
+    //TODO: 1. Singleton
     public class DbContext
     {
         public IList<Train> Trains { get; private set; }
