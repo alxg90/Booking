@@ -1,0 +1,37 @@
+﻿@model  BookingWeb.Models.TrainsModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="arrival-time-form">
+    <p>Choose the arrival time</p>
+    @using(Html.BeginForm("Search", "Train"))
+    {
+        <span>From</span>
+        <input type="time" name="startArrivalTime" />
+        <span>To</span>
+        <input type="time" name="endArrivalTime" />
+        <input type="submit" class="btn btn-success" value="Search" />
+    }
+</div>
+
+<table id="trains-table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Number</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Booking.Models.Train train in Model.CurrentTrains)
+        {
+            <tr>
+                <td>@train.Name</td>
+                <td>@train.Number</td>
+                <td><button class="btn btn-info" onclick="window.location = '@Url.Action("ShowTrainDetails", "Train", new {number = train.Number, startArrivalTime = Model.StartTime, endArrivalTime = Model.EndTime})'">Details</button> </td>
+            </tr>
+        }
+    </tbody>
+</table>

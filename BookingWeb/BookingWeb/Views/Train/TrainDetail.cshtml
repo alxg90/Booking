@@ -1,0 +1,35 @@
+﻿@model BookingWeb.Models.TrainDetailModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="train-details">
+    <h4>@Html.DisplayFor(model => model.CurrentTrain.Name)  @Html.DisplayFor(model => model.CurrentTrain.Number) </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Depatrue Time</dt>
+        <dd>
+            @Model.CurrentTrain.Stations[0].Arrival
+        </dd>
+        <dt>Trip duration</dt>
+
+        <dd>
+            @(Model.CurrentTrain.Stations[Model.CurrentTrain.Stations.Count - 1].Arrival - Model.CurrentTrain.Stations[0].Arrival)
+        </dd>
+    </dl>
+
+    <h5>Stations</h5>
+    <ul id="stations-list">
+        @foreach (Booking.Models.Station st in Model.CurrentTrain.Stations)
+        {
+            <li><span>@st.Name @st.Arrival </span></li>
+        }
+    </ul>
+
+    <p>
+        @Html.ActionLink("Back to list of trains", "Search", new { startArrivalTime = Model.StartTime, endArrivalTime = Model.EndTime })
+    </p>
+</div>
+
+
