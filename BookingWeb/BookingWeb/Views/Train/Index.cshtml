@@ -6,7 +6,7 @@
 
 <div id="arrival-time-form">
     <p>Choose the arrival time</p>
-    @using(Html.BeginForm("Search", "Train"))
+    @using (Html.BeginForm("Search", "Train"))
     {
         <span>From</span>
         <input type="time" name="startArrivalTime" />
@@ -31,7 +31,18 @@
                 <td>@train.Name</td>
                 <td>@train.Number</td>
                 <td><button class="btn btn-info" onclick="window.location = '@Url.Action("ShowTrainDetails", "Train", new {number = train.Number, startArrivalTime = Model.StartTime, endArrivalTime = Model.EndTime})'">Details</button> </td>
+                <td><button class="btn btn-info btn-delete">Delete</button> </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script type="text/javascript">
+    window.onload = function () {
+        TrainModule.init({
+            trainsTableId: "trains-table",
+            deleteButtonClass: "btn-delete",
+            deleteTrainUrl: "@Url.Action("DeleteTrain", "Train")"
+        });
+    }
+</script>

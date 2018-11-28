@@ -55,5 +55,12 @@ namespace BookingWeb.Controllers
             };
             return View("TrainDetail", trainDetailModel);
         }
+
+        [HttpPost]
+        public ActionResult DeleteTrain(int trainId)
+        {
+
+            return Json(new { success = true });
+        }
     }
 }
