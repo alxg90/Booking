@@ -4,45 +4,46 @@
     ViewBag.Title = "Home Page";
 }
 
-<div id="arrival-time-form">
-    <p>Choose the arrival time</p>
-    @using (Html.BeginForm("Search", "Train"))
-    {
-        <span>From</span>
-        <input type="time" name="startArrivalTime" />
-        <span>To</span>
-        <input type="time" name="endArrivalTime" />
-        <input type="submit" class="btn btn-success" value="Search" />
-    }
-</div>
-
-<table id="trains-table" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <td>Name</td>
-            <td>Number</td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Booking.Models.Train train in Model.CurrentTrains)
+<div id="trains-container">
+    <div id="arrival-time-form">
+        <p>Choose the arrival time</p>
+        @using (Html.BeginForm("Search", "Train"))
         {
-            <tr>
-                <td>@train.Name</td>
-                <td>@train.Number</td>
-                <td><button class="btn btn-info" onclick="window.location = '@Url.Action("ShowTrainDetails", "Train", new {number = train.Number, startArrivalTime = Model.StartTime, endArrivalTime = Model.EndTime})'">Details</button> </td>
-                <td><button class="btn btn-info btn-delete">Delete</button> </td>
-            </tr>
+            <span>From</span>
+            <input type="time" name="startArrivalTime" />
+            <span>To</span>
+            <input type="time" name="endArrivalTime" />
+            <input type="submit" class="btn btn-success" value="Search" />
         }
-    </tbody>
-</table>
+    </div>
 
+    <div id="trains-list-container">
+        <table id="trains-table" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Number</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: trains">
+                <tr>
+                    <td data-bind="text: Name"></td>
+                    <td data-bind="text: Number"></td>
+                    <td><button class="btn btn-info">Details</button> </td>
+                    <td><button class="btn btn-info btn-delete" data-bind="click: $root.onDeleteTrain">Delete</button> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <script type="text/javascript">
-    window.onload = function () {
+    $(document).ready(function () {
         TrainModule.init({
             trainsTableId: "trains-table",
             deleteButtonClass: "btn-delete",
-            deleteTrainUrl: "@Url.Action("DeleteTrain", "Train")"
-        });
-    }
+            deleteTrainUrl: "@Url.Action("DeleteTrain", "Train")",
+            trains: @Html.Raw(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.CurrentTrains))
+        })
+    });
 </script>

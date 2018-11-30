@@ -1,5 +1,6 @@
 ﻿var TrainModule = (function () {
     var options;
+    var viewModel;
 
     function init(viewOptions) {
         options = {
@@ -8,25 +9,32 @@
             deleteTrainUrl: viewOptions.deleteTrainUrl
         };
 
-        initHandlers();
+        viewModel = new ViewModel(viewOptions.trains);
+        ko.applyBindings(viewModel, $("#trains-container")[0]);
     }
-    
 
-    function initHandlers() {
+    function ViewModel(trains) {
+        var _this = this;
 
-        $("." + options.deleteButtonClass).click(function () {
+        _this.trains = ko.observableArray(trains);
+
+        _this.onDeleteTrain = function(trainItem) {
+            var isDelete = confirm("Ви впевнені, що хочете видалити потяг: " + trainItem.Name + " ?");
+            if (!isDelete) {
+                return;
+            }
+
             $.ajax({
                 type: "POST",
                 url: options.deleteTrainUrl,
                 data: {
-                    trainId: 143
+                    number: trainItem.Number,
+                    name: trainItem.Name
                 }
             }).done(function (response) {
-                debugger;
-
-
+                viewModel.trains(response);
             });
-        });
+        }
     }
 
     return {

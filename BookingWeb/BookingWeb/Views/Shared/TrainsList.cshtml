@@ -1,5 +1,9 @@
 ﻿@model  BookingWeb.Models.TrainsModel
 
+@{
+    Layout = null;
+}
+
 <table id="trains-table" class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -15,6 +19,7 @@
                 <td>@train.Name</td>
                 <td>@train.Number</td>
                 <td><button class="btn btn-info" onclick="window.location = '@Url.Action("ShowTrainDetails", "Train", new {number = train.Number, startArrivalTime = Model.StartTime, endArrivalTime = Model.EndTime})'">Details</button> </td>
+                <td><button class="btn btn-info btn-delete" data-trainNumber="@train.Number" data-name="@train.Name">Delete</button> </td>
             </tr>
         }
     </tbody>

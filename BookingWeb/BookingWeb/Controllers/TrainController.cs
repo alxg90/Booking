@@ -1,5 +1,6 @@
 ﻿using Booking.DataAccess.Repositories;
 using BookingWeb.Models;
+using BookingWeb.Services;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -9,10 +10,12 @@ namespace BookingWeb.Controllers
     public class TrainController : Controller
     {
         private readonly ITrainRepository _trainRepository;
+        private readonly ITrainService _trainService;
 
-        public TrainController(ITrainRepository trainRepository)
+        public TrainController(ITrainRepository trainRepository, ITrainService trainService)
         {
             _trainRepository = trainRepository;
+            _trainService = trainService;
         }
 
         public ActionResult Index()
@@ -53,14 +56,17 @@ namespace BookingWeb.Controllers
                 StartTime = startArrivalTime,
                 EndTime = endArrivalTime
             };
+            
+
             return View("TrainDetail", trainDetailModel);
         }
 
         [HttpPost]
-        public ActionResult DeleteTrain(int trainId)
+        public ActionResult DeleteTrain(TrainItem trainItem)
         {
+            var trains = _trainRepository.GetTrains().Skip(1).ToList();
 
-            return Json(new { success = true });
+            return Json(trains);
         }
     }
 }
